@@ -1,23 +1,48 @@
 
-void main(){
-	reset(50,50);
-	circle(0, 0, 10, "blue");
-	//launch(0, -20, 30, "carr�", "blue");
+void main() {
+   reset(50, 50);
+   //circle(0, 0, 10, "blue");
+   launch(0, -20, 30, "circle", "red");
 }
 
-void launch(int x, int y, int height, String type, String color){
-	//Lance un feu d'artifice
-	 for(int h = y; h < y + height; h++){
-	 	setPixel(x, h, color);
-	 	sleep(20);
-	 	setPixel(x, h, 255);
-	 }
-	 //explode(x, y+height, type, color);
+void launch(int x, int y, int height, String type, String color) {
+   //Lance un feu d'artifice
+    for (int h = y; h < y + height; h ++) {
+      setPixel(x, h, color);
+      sleep(20);
+      setPixel(x, h, 255);
+   }
+   //à remplacer par la fonction explode qui peut choisir entre différents types.
+    circle(x, y + height +5, 2, color);
+   sleep(100);
+   circle(x, y + height +5, 2, "white");
+   circle(x, y + height +5, 6, color);
+   sleep(100);
+   circle(x, y + height +5, 6, "white");
+   circle(x, y + height +5, 10, color);
+   sleep(100);
+   circle(x, y + height +5, 10, "white");
+   circle(x, y + height +5, 14, color);
+   sleep(100);
+   circle(x, y + height +5, 14, "white");
+   //explode(x, y+height, type, color);
 }
 
-void circle(int x, int y, int radius, String color){
-	for(int X = -radius; X < radius; X++){
-		setPixel(X, (int)(sqrt(radius*radius-X*X)), color);
-		setPixel(X, -(int)(sqrt(radius*radius-X*X)), color);
-	}
+void circle(int xCentre, int yCentre, int radius, String color) {
+	//Algorithme de tracé d'arc de cercle de Bresenham
+   for (int x = 0, y = radius, m = 5 -4 * radius; x <= y; x ++, m += 8 * x +4) {
+   	 setPixel(x + xCentre, y + yCentre, color);
+      setPixel(y + xCentre, x + yCentre, color);
+      setPixel( - x + xCentre, y + yCentre, color);
+      setPixel( - y + xCentre, x + yCentre, color);
+      setPixel(x + xCentre, - y + yCentre, color);
+      setPixel(y + xCentre, - x + yCentre, color);
+      setPixel( - x + xCentre, - y + yCentre, color);
+      setPixel( - y + xCentre, - x + yCentre, color);
+      if (m > 0) {
+         y --;
+         m -= 8 * y;
+      }
+   }
 }
+
