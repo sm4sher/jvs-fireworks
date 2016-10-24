@@ -1,0 +1,23 @@
+
+void main(){
+	reset(50,50);
+	circle(0, 0, 10, "blue");
+	//launch(0, -20, 30, "carré", "blue");
+}
+
+void launch(int x, int y, int height, String type, String color){
+	//Lance un feu d'artifice
+	 for(int h = y; h < y + height; h++){
+	 	setPixel(x, h, color);
+	 	sleep(20);
+	 	setPixel(x, h, 255);
+	 }
+	 //explode(x, y+height, type, color);
+}
+
+void circle(int x, int y, int radius, String color){
+	for(int X = -radius; X < radius; X++){
+		setPixel(X, (int)(sqrt(radius*radius-X*X)), color);
+		setPixel(X, -(int)(sqrt(radius*radius-X*X)), color);
+	}
+}
