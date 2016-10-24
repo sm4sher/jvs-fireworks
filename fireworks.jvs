@@ -13,18 +13,18 @@ void launch(int x, int y, int height, String type, String color) {
       setPixel(x, h, 255);
    }
    //à remplacer par la fonction explode qui peut choisir entre différents types.
-    circle(x, y + height +5, 2, color);
+    circle(x, y + height, 2, color);
    sleep(100);
-   circle(x, y + height +5, 2, "white");
-   circle(x, y + height +5, 6, color);
+   circle(x, y + height, 2, "white");
+   circle(x, y + height, 6, color);
    sleep(100);
-   circle(x, y + height +5, 6, "white");
-   circle(x, y + height +5, 10, color);
+   circle(x, y + height, 6, "white");
+   circle(x, y + height, 10, color);
    sleep(100);
-   circle(x, y + height +5, 10, "white");
-   circle(x, y + height +5, 14, color);
+   circle(x, y + height, 10, "white");
+   circle(x, y + height, 14, color);
    sleep(100);
-   circle(x, y + height +5, 14, "white");
+   circle(x, y + height, 14, "white");
    //explode(x, y+height, type, color);
 }
 
