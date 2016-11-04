@@ -1,69 +1,86 @@
 
+import java.awt. *;
+import javax.swing. *;
+
 void main() {
    reset(50, 50);
    //cree une image de (2*50+1)(2*50+1) pixels
-    String color = choice_color();
+    String couleur = choix_couleur();
    //apelle la fonction pour choisir la couleur du feu d'artifice
-    String type = choice_type();
+    String type = choix_type();
    //apelle l'autre fonction pour choisir le type de feu d'artifice
-    launch(0, -50, 50, type, color);
+    lancer(0, -50, 50, type, couleur);
+   //apelle la fonction lancer() avec 3 int et 2 strings en parametres
 }
 
-String choice_color() {
+String choix_couleur() {
    //demande la couleur a l'utilisateur et renvoie une variable String	
-    String color = readString("quelle couleur veux tu ?");
-   return  color;
+ String[] possibilites = {
+"black", "blue", "cyan", "gray", "green",
+"magenta", "orange", "pink", "red", "white", "yellow"}
+;
+String reponse = (String)JOptionPane.showInputDialog(new Frame(), "Choisir la couleur", "A vous !",
+JOptionPane.PLAIN_MESSAGE, null, possibilites, null);
+JOptionPane.showMessageDialog(new Frame(), "Vous avez choisi " + reponse+
+"\n\n Bonne idée...\n Sans doute !", "Couleur", JOptionPane.INFORMATION_MESSAGE);
+return reponse;
 }
 
-String choice_type() {
+String choix_type() {
    //demande le type de feu d'artifice et renvoie aussi une variable String
-    String type = readString("quelle type de feu d'artifice veux tu ? : carre, cercle, triangle, special");
-   return  type;
+    String[] possibilites = {
+"carre","cercle","triangle","special"}
+;
+String reponse = (String)JOptionPane.showInputDialog(new Frame(), "Choisir le type de feu d'artifice", "A vous !",
+JOptionPane.PLAIN_MESSAGE, null, possibilites, null);
+JOptionPane.showMessageDialog(new Frame(), "Vous avez choisi " + reponse, 
+"Couleur", JOptionPane.INFORMATION_MESSAGE);
+return reponse;
 }
 
-void launch(int x, int y, int height, String type, String color) {
+void lancer(int x, int y, int hauteur, String type, String couleur) {
    //Lance un feu d'artifice
-    for (int h = y; h < y + height; h ++) {
-      setPixel(x, h, color);
+    for (int h = y; h < y + hauteur; h ++) {
+      setPixel(x, h, couleur);
       //cree un pixel
-       sleep(100);
-      setPixel(x, h, 255);
+       sleep(50);
+      //attend 100 microsecondes
+       setPixel(x, h, 255);
       //efface le pixel
     }
-   //apelle la fonction explode avec en paprametres(x, y+height, type, color);
-    explode(x, y + height, type, color);
+   //apelle la fonction exploseur avec en paprametres(x, y+hauteur, type, couleur);
+    exploseur(x, y + hauteur, type, couleur);
 }
 
-void explode(int x, int y, String type, String color) {
+void exploseur(int x, int y, String type, String couleur) {
    //simule l'explosion du feu d'artice en apellant une fonction
     switch(type) {
-      case "carre" : square(x, y, color);
-      //fait un carre
+      case "carre" : carre(x, y, couleur);
+      //apelle la fonction carre() avec x,y,couleur
        break;
-      case "cercle" : circle(x, y, 30, color);
-      //fait un cercle
+      case "cercle" : cercle(x, y, 30, couleur);
+      //apelle la fonction cercle()
        break;
-      case "triangle" : triangle(x, y, color);
-      //fait un triangle
+      case "triangle" : triangle(x, y, couleur);
+      //apelle la fonction triangle
        break;
-      case "special" : special(x, y, color);
-      //explosion special
-       break;
+       case "special" : special(x,y,couleur);
+       //apelle la fonction special
+       break; 
    }
 }
 
-void square(int x, int y, String color) {
+void carre(int x, int y, String couleur) {
    int b =0;
    for (int i = 0; i < 6; i ++) {
       //boucle pour agrandir la figure
        b +=2;
       for (int a = 0; a < b; a ++) {
          //boucle pour creer la figure
-          setPixel(x + i, y + i - a, color);
-         setPixel(x - i, y - i + a, color);
-         setPixel(x - i + a, y + i, color);
-         setPixel(x + i - a, y - i, color);
-         sleep(5);
+          setPixel(x + i, y + i - a, couleur);
+         setPixel(x - i, y - i + a, couleur);
+         setPixel(x - i + a, y + i, couleur);
+         setPixel(x + i - a, y - i, couleur);
       }
       sleep(200);
       //on attend 20 millisecondes avand d'effacer la figure
@@ -73,40 +90,39 @@ void square(int x, int y, String color) {
          setPixel(x - i, y - i + a, "white");
          setPixel(x - i + a, y + i, "white");
          setPixel(x + i - a, y - i, "white");
-         sleep(5);
       }
-      sleep(200);
+      sleep(100);
    }
 }
 
-void circle(int x, int y, int radius, String color) {
-   circle2(x, y, 2, color);
+void cercle(int x, int y, int rayon, String couleur) {
+   cercle2(x, y, 2, couleur);
    sleep(200);
-   circle2(x, y, 2, "white");
-   circle2(x, y, 6, color);
+   cercle2(x, y, 2, "white");
+   cercle2(x, y, 6, couleur);
    sleep(200);
-   circle2(x, y, 6, "white");
-   circle2(x, y, 10, color);
+   cercle2(x, y, 6, "white");
+   cercle2(x, y, 10, couleur);
    sleep(200);
-   circle2(x, y, 10, "white");
-   circle2(x, y, 14, color);
+   cercle2(x, y, 10, "white");
+   cercle2(x, y, 14, couleur);
    sleep(200);
-   circle2(x, y, 14, "white");
-   //la fonction circle apelle  la fonction cirlce 2 a intervalle reguliers 
+   cercle2(x, y, 14, "white");
+   //la fonction cercle apelle  la fonction cirlce 2 a intervalle reguliers 
     //pour cree un cercle qui s'agrandit
 }
 
-void circle2(int xCentre, int yCentre, int radius, String color) {
+void cercle2(int xCentre, int yCentre, int rayon, String couleur) {
    //Algorithme de tracÃ© d'arc de cercle de Bresenham
-    for (int x = 0, y = radius, m = 5 -4 * radius; x <= y; x ++, m += 8 * x +4) {
-      setPixel(x + xCentre, y + yCentre, color);
-      setPixel(y + xCentre, x + yCentre, color);
-      setPixel( - x + xCentre, y + yCentre, color);
-      setPixel( - y + xCentre, x + yCentre, color);
-      setPixel(x + xCentre, - y + yCentre, color);
-      setPixel(y + xCentre, - x + yCentre, color);
-      setPixel( - x + xCentre, - y + yCentre, color);
-      setPixel( - y + xCentre, - x + yCentre, color);
+    for (int x = 0, y = rayon, m = 5 -4 * rayon; x <= y; x ++, m += 8 * x +4) {
+      setPixel(x + xCentre, y + yCentre, couleur);
+      setPixel(y + xCentre, x + yCentre, couleur);
+      setPixel( - x + xCentre, y + yCentre, couleur);
+      setPixel( - y + xCentre, x + yCentre, couleur);
+      setPixel(x + xCentre, - y + yCentre, couleur);
+      setPixel(y + xCentre, - x + yCentre, couleur);
+      setPixel( - x + xCentre, - y + yCentre, couleur);
+      setPixel( - y + xCentre, - x + yCentre, couleur);
       if (m > 0) {
          y --;
          m -= 8 * y;
@@ -114,47 +130,51 @@ void circle2(int xCentre, int yCentre, int radius, String color) {
    }
 }
 
-void triangle(int x, int y, String color) {
+void triangle(int x, int y, String couleur) {
    int b =0;
-   int c=0;
+   int c =0;
    for (int i = 0; i < 6; i ++) {
       b +=2;
-      c+=2;
-      triangle2(x, y, b,c, color);//apelle la fonction qui trace un triangle de la couleur choisie
-      sleep(400);
-      triangle2(x, y, b,c,"white");//efface le triangle
-      sleep(400);
+      c +=2;
+      triangle2(x, y, b, c, couleur);
+      //apelle la fonction qui trace un triangle de la couleur choisie
+       sleep(200);
+       //attend 200 microsecondes
+      triangle2(x, y, b, c, "white");
+      //efface le triangle
+       sleep(100);
    }
 }
 
-void triangle2(int x, int y, int b,int c, String color) {
+void triangle2(int x, int y, int b, int c, String couleur) {
    for (int a =0; a <= b; a ++) {
-      setPixel(x + a, y +c - a, color);
-      setPixel(x - b + a, y - b + a+c, color);
-      setPixel(x + b - a, y - b+c, color);
-      setPixel(x -b +a, y-b+c, color);
+      setPixel(x + a, y + c - a, couleur);
+      setPixel(x - b + a, y - b + a + c, couleur);
+      setPixel(x + b - a, y - b + c, couleur);
+      setPixel(x - b + a, y - b + c, couleur);
    }
 }
 
-void special(int x, int y, String color) {
+void special(int x, int y, String couleur) {
    int b =0;
    for (int i = 0; i < 6; i ++) {
       // attention figure special comportant des erreurs de programmation 
        //le code ne plante pas mais le resultat etait cense etre un carre
        b +=2;
       for (int a = 0; a < b; a ++) {
-         setPixel(x + i, y + i - a, color);
-         setPixel(x - i, y - i + a, color);
-         setPixel(x - i + a, y + i, color);
-         setPixel(x + i - a, y - i, color);
-         sleep(200);
+         setPixel(x + i, y + i - a, couleur);
+         setPixel(x - i, y - i + a, couleur);
+         setPixel(x - i + a, y + i, couleur);
+         setPixel(x + i - a, y - i, couleur);
+         //affiche 4 pixels
+         sleep(100);
+         //attend 200 microsecondes
          setPixel(x + i, y + i - a, "white");
          setPixel(x - i, y - i + a, "white");
          setPixel(x - i + a, y + i, "white");
          setPixel(x + i - a, y - i, "white");
-         sleep(10);
+         //efface ces 4 pixels
+         sleep(100);
       }
-      sleep(200);
    }
 }
-
